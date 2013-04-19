@@ -48,7 +48,7 @@ static char str_bottombar[LINE_BUFFER_SIZE];
 static bool busy_animating_in = false;
 static bool busy_animating_out = false;
 const int line1_y = 18;
-const int line2_y = 58;
+const int line2_y = 60;
 const int line3_y = 102;
 
 void animationInStoppedHandler(struct Animation *animation, bool finished, void *context) {
@@ -170,7 +170,7 @@ void updateLayer(TextLine *animating_line, int line) {
 void update_watch(PblTm* t) {
   //Let's get the new time and date
   fuzzy_time(t->tm_hour, t->tm_min, new_time.line1, new_time.line2, new_time.line3);
-  string_format_time(str_topbar, sizeof(str_topbar), "%A | %e %B", t);
+  string_format_time(str_topbar, sizeof(str_topbar), "%A | %e %b", t);
   string_format_time(str_bottombar, sizeof(str_bottombar), " %H%M | Week %W", t);
   
   //Let's update the top and bottom bar anyway - **to optimize later to only update top bar every new day.
@@ -178,11 +178,12 @@ void update_watch(PblTm* t) {
   text_layer_set_text(&bottombarLayer, str_bottombar);
   
   if(t->tm_min == 0){
+    vibes_short_pulse();
     if(t->tm_hour > 12){
       set_line2_pm();
     }
     else {
-      set_line2_pm();
+      set_line2_am();
     }
   }
   else if(t->tm_min == 1){
@@ -212,7 +213,7 @@ void update_watch(PblTm* t) {
 
 void init_watch(PblTm* t) {
   fuzzy_time(t->tm_hour, t->tm_min, new_time.line1, new_time.line2, new_time.line3);
-  string_format_time(str_topbar, sizeof(str_topbar), "%A | %e %B", t);
+  string_format_time(str_topbar, sizeof(str_topbar), "%A | %e %b", t);
   string_format_time(str_bottombar, sizeof(str_bottombar), " %H%M | Week %W", t);
   
   text_layer_set_text(&topbarLayer, str_topbar);
