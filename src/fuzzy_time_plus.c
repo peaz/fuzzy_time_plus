@@ -3,6 +3,7 @@
   Inspired by Fuzzy Time
   With Date, 24H display and Week #
   Hour background inverts depending on AM or PM
+  Vibes on new hour
  */
 
 #include "pebble_os.h"
@@ -260,39 +261,39 @@ void handle_init_app(AppContextRef app_ctx) {
   text_layer_set_text_color(&line1.layer[0], GColorWhite);
   text_layer_set_background_color(&line1.layer[0], GColorClear);
   text_layer_set_font(&line1.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  text_layer_set_text_alignment(&line1.layer[0], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line1.layer[0], GTextAlignmentRight);
   
   text_layer_init(&line1.layer[1], GRect(144, line1_y, 144, 50));
   text_layer_set_text_color(&line1.layer[1], GColorWhite);
   text_layer_set_background_color(&line1.layer[1], GColorClear);
   text_layer_set_font(&line1.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  text_layer_set_text_alignment(&line1.layer[1], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line1.layer[1], GTextAlignmentRight);
 
   // line2
   text_layer_init(&line2.layer[0], GRect(0, line2_y, 144, 50));
   text_layer_set_text_color(&line2.layer[0], GColorWhite);
   text_layer_set_background_color(&line2.layer[0], GColorBlack);
   text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  text_layer_set_text_alignment(&line2.layer[0], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line2.layer[0], GTextAlignmentRight);
 
   text_layer_init(&line2.layer[1], GRect(144, line2_y, 144, 50));
   text_layer_set_text_color(&line2.layer[1], GColorWhite);
   text_layer_set_background_color(&line2.layer[1], GColorBlack);
   text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  text_layer_set_text_alignment(&line2.layer[1], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line2.layer[1], GTextAlignmentRight);
   
   // line3
   text_layer_init(&line3.layer[0], GRect(0, line3_y, 144, 50));
   //text_layer_set_text_color(&line3.layer[0], GColorWhite);
   //text_layer_set_background_color(&line3.layer[0], GColorClear);
   text_layer_set_font(&line3.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
-  text_layer_set_text_alignment(&line3.layer[0], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line3.layer[0], GTextAlignmentRight);
 
   text_layer_init(&line3.layer[1], GRect(144, line3_y, 144, 50));
   //text_layer_set_text_color(&line3.layer[1], GColorWhite);
   //text_layer_set_background_color(&line3.layer[1], GColorClear);
   text_layer_set_font(&line3.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
-  text_layer_set_text_alignment(&line3.layer[1], GTextAlignmentLeft);
+  text_layer_set_text_alignment(&line3.layer[1], GTextAlignmentRight);
 
   //text_layer_init(&line3_bg, GRect(144, line3_y, 144, 48));
   //text_layer_set_background_color(&line3_bg, GColorWhite);
