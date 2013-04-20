@@ -13,7 +13,7 @@
 #define MY_UUID { 0xFF, 0xD6, 0x03, 0x73, 0x4F, 0xA0, 0x4D, 0x2A, 0x91, 0xFC, 0xF1, 0x15, 0x95, 0x95, 0x90, 0x71 }
 PBL_APP_INFO(MY_UUID,
              "Fuzzy Time +", "atpeaz.com",
-             2, 0, /* App version */
+             1, 1, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 #define ANIMATION_DURATION 800
