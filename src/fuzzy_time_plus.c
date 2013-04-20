@@ -11,12 +11,20 @@
 #include "pebble_fonts.h"
 #include "english_time.h"
 
+#define DEBUG 1
+
 #define MY_UUID { 0xFF, 0xD6, 0x03, 0x73, 0x4F, 0xA0, 0x4D, 0x2A, 0x91, 0xFC, 0xF1, 0x15, 0x95, 0x95, 0x90, 0x71 }
 PBL_APP_INFO(MY_UUID,
              "Fuzzy Time +", "atpeaz.com",
              2, 0, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
-             APP_INFO_WATCH_FACE);
+#if DEBUG
+             APP_INFO_STANDARD_APP
+#else
+             APP_INFO_WATCH_FACE
+#endif
+             );
+
 #define ANIMATION_DURATION 800
 #define LINE_BUFFER_SIZE 50
 #define WINDOW_NAME "fuzzy_time_plus"
@@ -245,6 +253,55 @@ void init_watch(PblTm* t) {
   text_layer_set_text(&line3.layer[0], cur_time.line3);
 }
 
+/** 
+ * Debug methods. For quickly debugging enable debug macro on top to transform the watchface into
+ * a standard app and you will be able to change the time with the up and down buttons
+ */ 
+#if DEBUG
+
+void up_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
+  (void)recognizer;
+  (void)window;
+  
+  t.tm_min += 1;
+  if (t.tm_min >= 60) {
+    t.tm_min = 0;
+    t.tm_hour += 1;
+    
+    if (t.tm_hour >= 24) {
+      t.tm_hour = 0;
+    }
+  }
+  display_time(&t);
+}
+
+
+void down_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
+  (void)recognizer;
+  (void)window;
+  
+  t.tm_min -= 1;
+  if (t.tm_min < 0) {
+    t.tm_min = 59;
+    t.tm_hour -= 1;
+  }
+  display_time(&t);
+}
+
+void click_config_provider(ClickConfig **config, Window *window) {
+  (void)window;
+
+  config[BUTTON_ID_UP]->click.handler = (ClickHandler) up_single_click_handler;
+  config[BUTTON_ID_UP]->click.repeat_interval_ms = 100;
+
+  config[BUTTON_ID_DOWN]->click.handler = (ClickHandler) down_single_click_handler;
+  config[BUTTON_ID_DOWN]->click.repeat_interval_ms = 100;
+}
+
+#endif
+
+/*** End Debug Mode ***/
+
 
 // Handle the start-up of the app
 void handle_init_app(AppContextRef app_ctx) {
@@ -303,7 +360,7 @@ void handle_init_app(AppContextRef app_ctx) {
   text_layer_set_text_color(&topbarLayer, GColorWhite);
   text_layer_set_background_color(&topbarLayer, GColorBlack);
   text_layer_set_font(&topbarLayer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(&topbarLayer, GTextAlignmentCenter);
+  text_layer_set_text_alignment(&topbarLayer, oCenter);
 
   // day24week
   text_layer_init(&bottombarLayer, GRect(0, 150, 144, 18));
@@ -328,6 +385,12 @@ void handle_init_app(AppContextRef app_ctx) {
   layer_add_child(&window.layer, &line1.layer[1].layer);
   layer_add_child(&window.layer, &bottombarLayer.layer); 
   layer_add_child(&window.layer, &topbarLayer.layer);
+}
+
+#if DEBUG
+  // Button functionality
+  window_set_click_config_provider(&window, (ClickConfigProvider) click_config_provider);
+#endif
 }
 
 // Called once per minute
