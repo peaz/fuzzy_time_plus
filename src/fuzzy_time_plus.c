@@ -29,6 +29,8 @@ PBL_APP_INFO(MY_UUID,
 #define LINE_BUFFER_SIZE 50
 #define WINDOW_NAME "fuzzy_time_plus"
 
+static PblTm t;
+
 Window window;
 
 typedef struct {
@@ -94,37 +96,37 @@ void set_pm_style(void) {
 
 void set_line2_am(void) {
   GRect rect = layer_get_frame(&line2.layer[0].layer);
-  if(rect.origin.x == 144) {
-    text_layer_set_text_color(&line2.layer[0], GColorBlack);
-    text_layer_set_background_color(&line2.layer[0], GColorWhite);  
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
-  }
-  else {
+  if(rect.origin.x == 0) {
     text_layer_set_text_color(&line2.layer[1], GColorBlack);
     text_layer_set_background_color(&line2.layer[1], GColorWhite);  
     text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+  }
+  else {
+    text_layer_set_text_color(&line2.layer[0], GColorBlack);
+    text_layer_set_background_color(&line2.layer[0], GColorWhite);  
+    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
   }
 }
 
 void set_line2_pm(void) {
   GRect rect = layer_get_frame(&line2.layer[0].layer);
-  if(rect.origin.x == 144) {
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));  }
+  if(rect.origin.x == 0) {
+    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));  }
   else {
     text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));  }
 }
 
 void reset_line2(void) {
   GRect rect = layer_get_frame(&line2.layer[0].layer);
-  if(rect.origin.x == 144) {
-    text_layer_set_text_color(&line2.layer[0], GColorWhite);
-    text_layer_set_background_color(&line2.layer[0], GColorBlack);  
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  }
-  else {
+  if(rect.origin.x == 0) {
     text_layer_set_text_color(&line2.layer[1], GColorWhite);
     text_layer_set_background_color(&line2.layer[1], GColorBlack);  
     text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+  }
+  else {
+    text_layer_set_text_color(&line2.layer[0], GColorWhite);
+    text_layer_set_background_color(&line2.layer[0], GColorBlack);  
+    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
   }  
 }
 
@@ -188,18 +190,18 @@ void update_watch(PblTm* t) {
   
   if(t->tm_min == 0){
     vibes_short_pulse();
-    if(t->tm_hour > 12){
+    if(t->tm_hour >= 12){
       set_line2_pm();
     }
     else {
       set_line2_am();
     }
   }
-  else if(t->tm_min == 1){
+  else if(t->tm_min > 1){
     reset_line2();
   }
 
-  if(t->tm_hour > 12){
+  if(t->tm_hour >= 12){
     set_pm_style();
   }
   else {
@@ -272,7 +274,7 @@ void up_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
       t.tm_hour = 0;
     }
   }
-  display_time(&t);
+  update_watch(&t);
 }
 
 
@@ -285,7 +287,7 @@ void down_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
     t.tm_min = 59;
     t.tm_hour -= 1;
   }
-  display_time(&t);
+  update_watch(&t);
 }
 
 void click_config_provider(ClickConfig **config, Window *window) {
@@ -360,7 +362,7 @@ void handle_init_app(AppContextRef app_ctx) {
   text_layer_set_text_color(&topbarLayer, GColorWhite);
   text_layer_set_background_color(&topbarLayer, GColorBlack);
   text_layer_set_font(&topbarLayer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(&topbarLayer, oCenter);
+  text_layer_set_text_alignment(&topbarLayer, GTextAlignmentCenter);
 
   // day24week
   text_layer_init(&bottombarLayer, GRect(0, 150, 144, 18));
@@ -372,7 +374,7 @@ void handle_init_app(AppContextRef app_ctx) {
   // Ensures time is displayed immediately (will break if NULL tick event accessed).
   // (This is why it's a good idea to have a separate routine to do the update itself.)
 
-  PblTm t;
+//  PblTm t;
   get_time(&t);
   init_watch(&t);
 
@@ -385,21 +387,23 @@ void handle_init_app(AppContextRef app_ctx) {
   layer_add_child(&window.layer, &line1.layer[1].layer);
   layer_add_child(&window.layer, &bottombarLayer.layer); 
   layer_add_child(&window.layer, &topbarLayer.layer);
-}
 
 #if DEBUG
   // Button functionality
   window_set_click_config_provider(&window, (ClickConfigProvider) click_config_provider);
 #endif
+
 }
 
+
+
 // Called once per minute
-void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
+void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *tick) {
   (void)ctx;
 
   if (busy_animating_out || busy_animating_in) return;
 
-  update_watch(t->tick_time);  
+  update_watch(&t);  
 }
 
 // The main event/run loop for our app
