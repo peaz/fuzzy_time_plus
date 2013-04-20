@@ -13,7 +13,7 @@
 #define MY_UUID { 0xFF, 0xD6, 0x03, 0x73, 0x4F, 0xA0, 0x4D, 0x2A, 0x91, 0xFC, 0xF1, 0x15, 0x95, 0x95, 0x90, 0x71 }
 PBL_APP_INFO(MY_UUID,
              "Fuzzy Time +", "atpeaz.com",
-             1, 1, /* App version */
+             1, 2, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 #define ANIMATION_DURATION 800
@@ -106,17 +106,17 @@ void set_line2_pm(void) {
 }
 
 void reset_line2(void) {
-  GRect rect = layer_get_frame(&line2.layer[0].layer);
-  if(rect.origin.x == 0) {
+//  GRect rect = layer_get_frame(&line2.layer[0].layer);
+//  if(rect.origin.x == 0) {
     text_layer_set_text_color(&line2.layer[1], GColorWhite);
     text_layer_set_background_color(&line2.layer[1], GColorBlack);  
     text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  }
-  else {
+//  }
+//  else {
     text_layer_set_text_color(&line2.layer[0], GColorWhite);
     text_layer_set_background_color(&line2.layer[0], GColorBlack);  
     text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
-  }  
+//  }  
 }
 
 void updateLayer(TextLine *animating_line, int line) {
@@ -186,7 +186,8 @@ void update_watch(PblTm* t) {
       set_line2_am();
     }
   }
-  else if(t->tm_min == 1){
+  
+  if(t->tm_min > 1){
     reset_line2();
   }
 

@@ -177,9 +177,8 @@ void fuzzy_time(int hours, int minutes, char* line1, char* line2, char* line3) {
     }
     else {
       hours += 1;
-      if (hours == 24) {
-        hours = 0;
-      }
+      if (hours == 24) hours = 0;
+      if (hours > 12) hours -= 12;
       strcat(line2,STR_TO);
     }
 
