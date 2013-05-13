@@ -12,6 +12,18 @@
 	   	"type":"png",
 	   	"defName": "IMAGE_MENU_ICON",
 	   	"file":"images/menu_icon.png"
+	   },
+
+	   {
+	   	"type":"font",
+	   	"defName": "FONT_TWCENMT_36_BOLD",
+	   	"file":"fonts/twcenmt_bold.ttf"
+	   },
+
+	   {
+	   	"type":"font",
+	   	"defName": "FONT_TWCENMT_39",
+	   	"file":"fonts/twcenmt_light.ttf"
 	   }
 	  ]
 }
