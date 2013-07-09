@@ -88,21 +88,21 @@ void set_line2_am(void) {
   if(rect.origin.x == 0) {
     text_layer_set_text_color(&line2.layer[1], GColorBlack);
     text_layer_set_background_color(&line2.layer[1], GColorWhite);  
-    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   }
   else {
     text_layer_set_text_color(&line2.layer[0], GColorBlack);
     text_layer_set_background_color(&line2.layer[0], GColorWhite);  
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   }
 }
 
 void set_line2_pm(void) {
   GRect rect = layer_get_frame(&line2.layer[0].layer);
   if(rect.origin.x == 0) {
-    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));  }
+    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));  }
   else {
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));  }
+    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));  }
 }
 
 void reset_line2(void) {
@@ -110,12 +110,12 @@ void reset_line2(void) {
 //  if(rect.origin.x == 0) {
     text_layer_set_text_color(&line2.layer[1], GColorWhite);
     text_layer_set_background_color(&line2.layer[1], GColorBlack);  
-    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+    text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
 //  }
 //  else {
     text_layer_set_text_color(&line2.layer[0], GColorWhite);
     text_layer_set_background_color(&line2.layer[0], GColorBlack);  
-    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+    text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
 //  }  
 }
 
@@ -260,39 +260,39 @@ void handle_init_app(AppContextRef app_ctx) {
   text_layer_init(&line1.layer[0], GRect(0, line1_y, 144, 50));
   text_layer_set_text_color(&line1.layer[0], GColorWhite);
   text_layer_set_background_color(&line1.layer[0], GColorClear);
-  text_layer_set_font(&line1.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+  text_layer_set_font(&line1.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
   text_layer_set_text_alignment(&line1.layer[0], GTextAlignmentLeft);
   
   text_layer_init(&line1.layer[1], GRect(144, line1_y, 144, 50));
   text_layer_set_text_color(&line1.layer[1], GColorWhite);
   text_layer_set_background_color(&line1.layer[1], GColorClear);
-  text_layer_set_font(&line1.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+  text_layer_set_font(&line1.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
   text_layer_set_text_alignment(&line1.layer[1], GTextAlignmentLeft);
 
   // line2
   text_layer_init(&line2.layer[0], GRect(0, line2_y, 144, 50));
   text_layer_set_text_color(&line2.layer[0], GColorWhite);
   text_layer_set_background_color(&line2.layer[0], GColorBlack);
-  text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+  text_layer_set_font(&line2.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
   text_layer_set_text_alignment(&line2.layer[0], GTextAlignmentLeft);
 
   text_layer_init(&line2.layer[1], GRect(144, line2_y, 144, 50));
   text_layer_set_text_color(&line2.layer[1], GColorWhite);
   text_layer_set_background_color(&line2.layer[1], GColorBlack);
-  text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_LIGHT));
+  text_layer_set_font(&line2.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
   text_layer_set_text_alignment(&line2.layer[1], GTextAlignmentLeft);
   
   // line3
   text_layer_init(&line3.layer[0], GRect(0, line3_y, 144, 50));
   //text_layer_set_text_color(&line3.layer[0], GColorWhite);
   //text_layer_set_background_color(&line3.layer[0], GColorClear);
-  text_layer_set_font(&line3.layer[0], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+  text_layer_set_font(&line3.layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   text_layer_set_text_alignment(&line3.layer[0], GTextAlignmentLeft);
 
   text_layer_init(&line3.layer[1], GRect(144, line3_y, 144, 50));
   //text_layer_set_text_color(&line3.layer[1], GColorWhite);
   //text_layer_set_background_color(&line3.layer[1], GColorClear);
-  text_layer_set_font(&line3.layer[1], fonts_get_system_font(FONT_KEY_GOTHAM_42_BOLD));
+  text_layer_set_font(&line3.layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   text_layer_set_text_alignment(&line3.layer[1], GTextAlignmentLeft);
 
   //text_layer_init(&line3_bg, GRect(144, line3_y, 144, 48));
